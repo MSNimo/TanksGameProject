@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Code
 {
@@ -25,8 +23,7 @@ namespace Assets.Code
         /// Determine what platform we're presently running on.
         /// </summary>
         /// <returns>What platform we're running on</returns>
-        public static PlatformType GetPlatform()
-        {
+        public static PlatformType GetPlatform () {
             // TODO fill me in
             return PlatformType.Windows; // not necessarily true
         }
@@ -36,19 +33,17 @@ namespace Assets.Code
         /// Windows has a different binding for the right trigger than OSX/Linux.
         /// </summary>
         /// <returns>Name of the "fire" axis</returns>
-        public static string GetFireAxis()
-        {
+        public static string GetFireAxis() {
             return GetPlatform() == PlatformType.Windows ? "FireWindows" : "FireMac"; // OSX/Linux bind right trigger the same way
         }
-
+        
         /// <summary>
         /// Returns the name of the platform appropriate input axis for saving.
         /// Start/Back are mapped to Save/Load. OSX uses a different button number than Windows/Linux.
         /// </summary>
         /// <returns>Name of the "save" axis</returns>
-        public static string GetSaveAxis()
-        {
-            return GetPlatform() == PlatformType.Mac ? "SaveMac" : "SaveWindows";
+        public static string GetSaveAxis () {
+            return GetPlatform() == PlatformType.Mac ? "SaveMac" : "SaveWindows"; 
         }
     }
 
