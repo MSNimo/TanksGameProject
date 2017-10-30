@@ -14,6 +14,7 @@ namespace Assets.Code
         private Rigidbody2D _rb;
         private Gun _gun;
 
+
         // ReSharper disable once UnusedMember.Global
         internal void Start () {
             _rb = GetComponent<Rigidbody2D>();
