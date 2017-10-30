@@ -49,7 +49,7 @@ namespace Assets.Code.Structure
         {
             public ScoreData Score;
             public PlayerGameData Player;
-            public AsteroidsData Asteroids;
+            //public AsteroidsData Asteroids;
             public BulletsData Bullets;
 
             public SaveData () {

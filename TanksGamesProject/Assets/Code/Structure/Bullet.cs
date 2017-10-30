@@ -16,9 +16,11 @@ namespace Assets.Code.Structure
             if (Time.time > _deathtime) { Die(); }
         }
 
-        internal void OnCollisionEnter2D(Collision2D other) {
+        private void OnCollisionEnter2D(Collision2D other) {
             Die(); // we die no matter what :(
+            Debug.Log("Sad");
             if (other.gameObject.GetComponent<Player>() != null) Game.Score.AddScore(-2);
+            if (other.gameObject.GetComponent<Wall>() != null) Debug.Log("Dead");
         }
 
         private void Die () {

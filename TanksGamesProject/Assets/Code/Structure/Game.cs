@@ -16,11 +16,12 @@ namespace Assets.Code.Structure
         public static SaveLoadManager Saveload;
 
         // 
-        // all of the things that we can about saving/loading
+        // all of the things that we can about saving/loading   
         public static ScoreManager Score;
         public static Player Player;
         //public static AsteroidManager Asteroids;
         public static BulletManager Bullets;
+        public static Wall wall;
 
 
         internal void Start () {
@@ -29,6 +30,8 @@ namespace Assets.Code.Structure
             Saveload = new SaveLoadManager();
             Score = GameObject.Find("ScoreText").GetComponent<ScoreManager>();
             Player = GameObject.Find("Player").GetComponent<Player>();
+            wall = GameObject.Find("Wall").GetComponent<Wall>();
+
             //Asteroids = GameObject.Find("Spawner").GetComponent<AsteroidManager>();
             Bullets = new BulletManager(GameObject.Find("Bullets").transform);
 

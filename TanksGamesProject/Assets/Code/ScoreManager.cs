@@ -1,58 +1,53 @@
 ﻿using System;
-using Assets.Code.Structure;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Code
+
+namespace Assets.Code.Structure
 {
-    /// <summary>
-    /// Keeps track of the player's current score.
-    /// </summary>
-    // ReSharper disable once ClassNeverInstantiated.Global
-    public class ScoreManager : MonoBehaviour, ISaveLoad
-    {
-        public int CurrentScore { get; private set; }
-        private static Text _scoreText;
+    public class ScoreManager : MonoBehaviour {
+        private static float _pScore, _p2Score;
+        private static Text _pScoreText, _p2ScoreText;
+        private static RectTransform _pScoreRect, _p2ScoreRect;
 
-        // ReSharper disable once UnusedMember.Global
-        internal void Start () {
-            _scoreText = GetComponent<Text>();
-            CurrentScore = 0;
-            UpdateScore();
+        private void Start() {
+            if (gameObject.name == "Player1Score") {
+                _pScoreRect = GetComponent<RectTransform>();
+                _pScoreText = GetComponent<Text>();
+            }
+            else {
+                _p2ScoreRect = GetComponent<RectTransform>();
+                _p2ScoreText = GetComponent<Text>();
+            }
+            
+            RefreshScore();
         }
 
-        public void AddScore (int value) {
-            CurrentScore = Mathf.Max(0, CurrentScore + value);
-            UpdateScore();
+        public static void AddScore(string player, float score) {
+            if (player == "Player") {
+                _pScore += score;
+            }
+            else {
+                _p2Score += score;
+            }
+            RefreshScore();
         }
 
-        private void UpdateScore () {
-            _scoreText.text = string.Format("{0}", CurrentScore).PadLeft(4, '0');
+        private static void RefreshScore() {
+            if (_pScoreText == null | _p2ScoreText == null) {
+                return;
+            }
+            _pScoreText.text = String.Format("\tP1: {0}", _pScore);
+            _p2ScoreText.text = String.Format("P2: {0}\t", _p2Score);
         }
 
-        #region saveload
-        public GameData OnSave () {
-            ScoreData scoreData = new ScoreData();
-            scoreData.Score = CurrentScore;
-            return scoreData;
-            //throw new NotImplementedException();
+        private void Update() {
+            var height = Screen.height;
+            var width = Screen.width;
+            _pScoreRect.position = new Vector3(0f, height);
+            _p2ScoreRect.position = new Vector3(width, height);
+            _pScoreRect.sizeDelta = new Vector2(width * .5f, 20f);
+            _p2ScoreRect.sizeDelta = new Vector2(width * .5f, 20f);
         }
-
-        public void OnLoad (GameData data) {
-            // TODO fill me in
-
-            CurrentScore = (data as ScoreData).Score;
-            UpdateScore();
-            //throw new NotImplementedException();
-        }
-        #endregion
-    }
-
-    /// <summary>
-    /// The data from the ScoreManager to save in the save file.
-    /// </summary>
-    public class ScoreData : GameData
-    {
-        public int Score;
     }
 }

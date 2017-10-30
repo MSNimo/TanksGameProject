@@ -1,15 +1,14 @@
-﻿using System;
+
 using System.Collections.Generic;
-using Assets.Code.Structure;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Assets.Code
+namespace Assets.Code.Structure
 {
     /// <summary>
     /// Bullet manager for spawning and tracking all of the game's bullets
     /// </summary>
-    public class BulletManager : ISaveLoad
+    public class BulletManager
     {
         private readonly Transform _holder;
 
@@ -24,56 +23,28 @@ namespace Assets.Code
         }
 
         // TODO fill me in
-        public void ForceSpawn (Vector2 pos, Quaternion rotation, Vector2 velocity, float deathtime) {
-            GameObject new_bullet = (GameObject)Object.Instantiate(_bullet, pos, rotation);
-            new_bullet.transform.SetParent(_holder);
-            new_bullet.GetComponent<Bullet>().Initialize(velocity, deathtime);
-        }
+        public void ForceSpawn (Vector2 pos, Quaternion rotation, Vector2 velocity, float deathtime, int reference) {
 
-        #region saveload
+            var bullet = (GameObject)Object.Instantiate(_bullet, pos, rotation,_holder); 
+            Debug.Log(bullet);
 
-        // TODO fill me in
-        public GameData OnSave () {
-            BulletsData bulletsData = new BulletsData();
-            bulletsData.Bullets = new List<BulletData>();
-            Bullet[] bullets = GameObject.FindObjectsOfType(typeof(Bullet)) as Bullet[];
-
-            foreach (Bullet bullet in bullets)
+            if (reference == 1)
             {
-                BulletData bulletData = new BulletData();
-
-                bulletData.Pos = bullet.GetComponent<Rigidbody2D>().position;
-                bulletData.Velocity = bullet.GetComponent<Rigidbody2D>().velocity;
-                bulletData.Rotation = bullet.GetComponent<Rigidbody2D>().rotation;
-                bulletsData.Bullets.Add(bulletData);     
+                bullet.GetComponent<Bullet>().Initialize(velocity, deathtime, Color.red);  
             }
-            return bulletsData;
-            //throw new NotImplementedException();
+            else  bullet.GetComponent<Bullet>().Initialize(velocity, deathtime, Color.cyan);
+
         }
+        
+        
 
-        // TODO fill me in
-        public void OnLoad (GameData data) {
-
-            Bullet[] bullets = GameObject.FindObjectsOfType(typeof(Bullet)) as Bullet[];
-            foreach (Bullet bullet in bullets) {
-                Bullet.Destroy(bullet.gameObject);
-            }
-
-            foreach (BulletData bulletData in (data as BulletsData).Bullets) {
-                ForceSpawn(bulletData.Pos, Quaternion.Euler(0,0,bulletData.Rotation), bulletData.Velocity, Bullet.Lifetime + Time.time);
-            }
-
-            //throw new NotImplementedException();
-        }
-
-        #endregion
-
+        
     }
 
     /// <summary>
     /// Save data for all bullets in game
     /// </summary>
-    public class BulletsData : GameData
+    public class BulletsData     
     {
         public List<BulletData> Bullets;
     }

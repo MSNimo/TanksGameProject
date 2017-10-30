@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 
-namespace Assets.Code
+namespace Assets.Code.Structure
 {
     /// <summary>
     /// Represents a what platform (e.g. OS) we're running on
     /// </summary>
-    public enum PlatformType
-    {
+    public enum PlatformType {
         Windows,
         Mac,
         Linux,
@@ -17,34 +16,18 @@ namespace Assets.Code
     /// Determining the controller "axis" bindings for the particular platform we're on.
     /// This lets the rest of the game ignore whether we're running on Max or Windows.
     /// </summary>
-    public static class Platform
-    {
-        /// <summary>
-        /// Determine what platform we're presently running on.
-        /// </summary>
-        /// <returns>What platform we're running on</returns>
-        public static PlatformType GetPlatform () {
-            // TODO fill me in
-            return PlatformType.Windows; // not necessarily true
+    public static class Platform {
+        public static PlatformType GetPlatform() {
+            
+            return PlatformType.Windows; 
         }
 
-        /// <summary>
-        /// Returns the name of the platform appropriate input axis for firing.
-        /// Windows has a different binding for the right trigger than OSX/Linux.
-        /// </summary>
-        /// <returns>Name of the "fire" axis</returns>
-        public static string GetFireAxis() {
-            return GetPlatform() == PlatformType.Windows ? "FireWindows" : "FireMac"; // OSX/Linux bind right trigger the same way
-        }
-        
-        /// <summary>
-        /// Returns the name of the platform appropriate input axis for saving.
-        /// Start/Back are mapped to Save/Load. OSX uses a different button number than Windows/Linux.
-        /// </summary>
-        /// <returns>Name of the "save" axis</returns>
-        public static string GetSaveAxis () {
-            return GetPlatform() == PlatformType.Mac ? "SaveMac" : "SaveWindows"; 
+        public static string GetFireAxis(int player) {
+            if (GetPlatform() == PlatformType.Windows) {
+                return player == 1 ? "FireWindows" : "FireWindows2";
+            }
+            return player == 1 ? "FireMac" : "FireMac2";
+            
         }
     }
-
 }
