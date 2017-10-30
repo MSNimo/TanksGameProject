@@ -42,12 +42,10 @@ namespace Assets.Code.Structure
         }
 
         private void Update() {
-            var height = Screen.height;
-            var width = Screen.width;
-            _pScoreRect.position = new Vector3(0f, height);
-            _p2ScoreRect.position = new Vector3(width, height);
-            _pScoreRect.sizeDelta = new Vector2(width * .5f, 20f);
-            _p2ScoreRect.sizeDelta = new Vector2(width * .5f, 20f);
+            _pScoreRect.position = new Vector3(0f, Screen.height);
+            _p2ScoreRect.position = new Vector3(Screen.width, Screen.height);
+            _pScoreRect.sizeDelta = new Vector2(Screen.width * .75f, 20f);
+            _p2ScoreRect.sizeDelta = new Vector2(Screen.width * .75f, 20f);
         }
     }
 }

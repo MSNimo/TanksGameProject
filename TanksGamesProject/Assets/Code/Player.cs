@@ -9,8 +9,6 @@ namespace Assets.Code.Structure
         private static string _fireaxis;
         private Rigidbody2D _rb;
         private Gun _gun;
-        public float speed;
-        public float angle;
 
         internal void Start()
         {
@@ -18,9 +16,6 @@ namespace Assets.Code.Structure
             _gun = GetComponent<Gun>();
             _rb.velocity = Vector2.zero;
             _rb.angularVelocity = 0f;
-            angle = 120f;
-            speed = 5f;
-
             _fireaxis = Platform.GetFireAxis(1);
         }
 
@@ -28,7 +23,6 @@ namespace Assets.Code.Structure
         {
             HandleInput();
         }
-
 
         private void HandleInput()
         {
@@ -41,8 +35,8 @@ namespace Assets.Code.Structure
             if (Mathf.Abs(direction) < 0.2f) direction = 0;
             if (Mathf.Abs(intensity) < 0.2f) intensity = 0;
 
-            _rb.MovePosition(_rb.position + (((Vector2)transform.up) * intensity * speed * Time.deltaTime));
-            _rb.MoveRotation(_rb.rotation + (direction * angle * Time.deltaTime));
+            _rb.MovePosition(_rb.position + (((Vector2)transform.up) * intensity * 5f * Time.deltaTime));
+            _rb.MoveRotation(_rb.rotation + (direction * 120f * Time.deltaTime));
         }
 
         private void Fire()
